@@ -1,12 +1,14 @@
 <script setup lang="ts">
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
-import HelloWorld from './components/HelloWorld.vue'
 </script>
 
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Hello Vue 3 + TypeScript + Vite" />
+<div>
+  <img src="./assets/radar.png" class="inline rounded-lg text-center w-16 md:w-32 lg:w-48" alt="radar logo">
+    <h1>Tech Radar</h1>
+</div>
+  
 </template>
 
 <style>
