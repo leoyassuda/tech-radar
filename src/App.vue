@@ -8,11 +8,13 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
   </div>
-  <router-view />
-<div>
+  
+<div class="py-10">
   <img src="./assets/radar.png" class="inline rounded-lg text-center w-16 md:w-32 lg:w-48" alt="radar logo">
     <h1>Tech Radar</h1>
 </div>
+
+<router-view />
   
 </template>
 
