@@ -6,8 +6,7 @@ const request = axios.create({
   timeout: 10000,
   transformRequest: [
     function (data) {
-      const d = qs.stringify(data);
-      return d;
+      return qs.stringify(data);
     },
   ],
 });
@@ -26,8 +25,7 @@ const request = axios.create({
 
 request.interceptors.response.use(
   (response) => {
-    const res = response.data;
-    return res;
+    return response;
   },
   (error) => {
     console.log('err' + error);
