@@ -1,14 +1,10 @@
 <template>
-    <div>
-        <span>{{ msg }}</span>
-    </div>
-    <h2>ASDSADADA</h2>
-    <div>
+    <div v-if="info !== null">
         <div
-            class="flex items-center justify-center h-screen bg-gradient-to-br from-indigo-500 to-indigo-800"
+            class="flex items-center justify-center h-screen md:h-[32rem]"
         >
             <div
-                class="bg-white font-semibold text-center rounded-3xl border shadow-lg p-10 max-w-xs"
+                class="bg-white font-semibold text-center rounded-3xl border shadow-xl p-10 max-w-xs"
             >
                 <img
                     class="mb-3 w-32 h-32 rounded-full shadow-lg mx-auto"
@@ -30,11 +26,9 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
-import { User } from "../model/User";
 
 export default defineComponent({
     props: {
-        msg: String,
         info: {
             type: Object as PropType<any>,
             require: true

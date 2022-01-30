@@ -13,10 +13,13 @@
     "pinia": "^2.0.9",
     "qs": "^6.10.3",
     "vue": "^3.2.25",
+    "vue-chart-3": "^3.0.9",
     "vue-router": "^4.0.12",
     "vuex": "^4.0.2"
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.178",
+    "@types/node": "^17.0.12",
     "@vitejs/plugin-vue": "^2.0.0",
     "autoprefixer": "^10.4.2",
     "postcss": "^8.4.5",
