@@ -3,7 +3,9 @@ import { onMounted } from 'vue'
 import { storeToRefs, mapActions } from 'pinia';
 import { userStore } from '../store/modules/user';
 import UserCard from '@/components/UserCard.vue';
-import ReposChartDunutCard from '@/components/ReposChartDunutCard.vue';
+import ReposChartDunutCard from '@/components/ReposChartDunutCard.vue'
+import RepoInfoCard from '@/components/RepoInfoCard.vue'
+import Statistic from '@/components/Statistic.vue'
 
 let username = '';
 
@@ -35,10 +37,14 @@ onMounted(() => main.fetchInfo(username))
       <UserCard msg="asd123" :info="info" />
     </div>
     <div class="inline basis content-center">
-      <ReposChartDunutCard />
+      <ReposChartDunutCard  />
+    </div>
+    <div class="inline basis content-center">
+      <RepoInfoCard :repos="[]" />
+    </div>
+    <div class="inline basis content-center">
+      <Statistic />
     </div>
   </div>
-  
-  
 </template>
 

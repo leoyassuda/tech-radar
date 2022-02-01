@@ -1,8 +1,6 @@
 <template>
     <div v-if="info !== null">
-        <div
-            class="flex items-center justify-center h-screen md:h-[32rem]"
-        >
+        <div class="flex items-center justify-center h-screen md:h-[32rem]">
             <div
                 class="bg-white font-semibold text-center rounded-3xl border shadow-xl p-10 max-w-xs"
             >
@@ -20,6 +18,18 @@
                     target="_blank"
                 >Github Profile</a>
             </div>
+        </div>
+    </div>
+
+    <div
+        v-if="info === null"
+        class="animate-pulse flex items-center justify-center h-screen md:h-[32rem]"
+    >
+        <div class="bg-white font-semibold text-center rounded-3xl border shadow-xl p-10 max-w-xs">
+            <div class="rounded-full bg-slate-700 mb-e h-28 w-28 mx-auto"></div>
+            <div class="h-2 bg-slate-700 rounded my-4"></div>
+            <div class="h-2 bg-slate-700 rounded my-2 mx-6"></div>
+            <div class="h-2 bg-slate-700 rounded my-2 mx-4"></div>
         </div>
     </div>
 </template>

@@ -1,24 +1,68 @@
 <template>
-    <div v-if="info !== null">
-        <div
-            class="flex items-center justify-center h-screen md:h-[32rem]"
-        >
-            <div
-                class="bg-white font-semibold text-center rounded-3xl border shadow-xl p-10 max-w-xs"
-            >
+    <!-- component -->
+    <div class="w-screen h-auto flex justify-center items-center">
+        <div class="container mx-auto max-w-xs rounded-lg overflow-hidden shadow-lg my-2 bg-white">
+            <div class="relative m-2 bg-blend-darken">
                 <img
-                    class="mb-3 w-32 h-32 rounded-full shadow-lg mx-auto"
-                    :src="info?.logo"
-                    alt="product designer"
+                    class="w-1/2 bg-blend-darken inline"
+                    src="../static/images/github.png"
+                    alt="Profile picture"
                 />
-                <h1 class="text-lg text-gray-700">{{ info?.name }}</h1>
-                <h3 class="text-sm text-gray-400">{{ info?.language }}</h3>
-                <p class="text-xs text-gray-400 my-4">BIO: {{ info?.description }}</p>
-                <a
-                    class="bg-indigo-600 px-8 py-2 mt-12 rounded-3xl text-gray-100 font-semibold uppercase tracking-wide"
-                    :href="info?.html_url"
-                    target="_blank"
-                >Repo Link</a>
+            </div>
+            <div class="py-6 px-3 text-center tracking-wide grid grid-cols-3 gap-6">
+                <div class="posts">
+                    <p class="text-lg">324</p>
+                    <p class="text-gray-400 text-sm">Posts</p>
+                </div>
+                <div class="followers">
+                    <p class="text-lg">7542</p>
+                    <p class="text-gray-400 text-sm">Followers</p>
+                </div>
+                <div class="following">
+                    <p class="text-lg">295</p>
+                    <p class="text-gray-400 text-sm">Following</p>
+                </div>
+            </div>
+            <div class="text-center w-full py-4">
+                <Disclosure>
+                    <DisclosureButton
+                        class="p-2 relative rounded-full transition ease-in duration-200 focus:outline-none"
+                    >
+                        <svg viewBox="0 0 20 20" enable-background="new 0 0 20 20" class="w-6 h-6">
+                            <path
+                                fill="#FFFFFF"
+                                d="M16,10c0,0.553-0.048,1-0.601,1H11v4.399C11,15.951,10.553,16,10,16c-0.553,0-1-0.049-1-0.601V11H4.601
+                                C4.049,11,4,10.553,4,10c0-0.553,0.049-1,0.601-1H9V4.601C9,4.048,9.447,4,10,4c0.553,0,1,0.048,1,0.601V9h4.399
+                                C15.952,9,16,9.447,16,10z"
+                            />
+                        </svg>
+                    </DisclosureButton>
+                    <transition
+                        enter-active-class="transition duration-150 ease-out"
+                        enter-from-class="transform scale-95 opacity-0"
+                        enter-to-class="transform scale-100 opacity-100"
+                        leave-active-class="transition duration-75 ease-out"
+                        leave-from-class="transform scale-100 opacity-100"
+                        leave-to-class="transform scale-95 opacity-0"
+                    >
+                        <DisclosurePanel class="text-gray-500">
+                            <a
+                                v-for="item in solutions"
+                                :key="item.name"
+                                :href="item.href"
+                                class="flex items-center p-2 -m-3 transition duration-150 ease-in-out rounded-lg hover:bg-gray-50 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
+                            >
+                                <div
+                                    class="flex items-center justify-center flex-shrink-0 w-10 h-10 text-white sm:h-12 sm:w-12"
+                                ></div>
+                                <div class="ml-4">
+                                    <p class="text-sm font-medium text-gray-900">{{ item.name }}</p>
+                                    <p class="text-sm text-gray-500">{{ item.description }}</p>
+                                </div>
+                            </a>
+                        </DisclosurePanel>
+                    </transition>
+                </Disclosure>
             </div>
         </div>
     </div>
@@ -26,14 +70,53 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
+import {
+    Disclosure,
+    DisclosureButton,
+    DisclosurePanel,
+} from '@headlessui/vue'
+import { ChevronDownIcon } from '@heroicons/vue/solid'
+
+const solutions = [
+    {
+        name: 'aaa1',
+        href: '#',
+        description: ''
+    },
+    {
+        name: 'aaa2',
+        href: '#',
+        description: ''
+    }
+]
 
 export default defineComponent({
     props: {
-        info: {
+        repoInfo: {
             type: Object as PropType<any>,
             require: true
         }
     },
     methods: {},
+    components: {
+        Disclosure,
+        DisclosureButton,
+        DisclosurePanel,
+        ChevronDownIcon
+    },
+    data() {
+        return { solutions: solutions }
+    },
 });
 </script>
+
+<style scoped>
+button {
+    background-color: #6617cb;
+    background-image: linear-gradient(315deg, #6617cb 0%, #cb218e 74%);
+    box-shadow: 0 0 0 0 #ec008c, 0.2rem 0.2rem 30px #6617cb;
+}
+button:hover {
+    box-shadow: 0 0 0 0 #ec008c, 0.2rem 0.2rem 60px #6617cb;
+}
+</style>
