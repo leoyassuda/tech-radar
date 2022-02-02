@@ -12,10 +12,12 @@
     "@heroicons/vue": "^1.0.5",
     "@types/qs": "^6.9.7",
     "axios": "^0.25.0",
+    "country-code-lookup": "^0.0.20",
     "pinia": "^2.0.9",
     "qs": "^6.10.3",
     "vue": "^3.2.25",
     "vue-chart-3": "^3.0.9",
+    "vue-country-flag-next": "^2.3.2",
     "vue-router": "^4.0.12",
     "vuex": "^4.0.2"
   },

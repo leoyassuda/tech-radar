@@ -1,16 +1,15 @@
-import request from '../plugins/axios';
+import request from '@/plugins/axios';
 
 const BASE_URL = import.meta.env.VITE_GITHUB_BASE_URL;
 
-export function getUserInfo(username: string) {
+export function getUserInfo(username: string): Promise<any> {
 	return request({
 		url: `${BASE_URL}/users/${username}`,
 		method: 'get',
-		// params,
 	});
 }
 
-export function getUserRepos(username: string) {
+export function getUserRepos(username: string): Promise<any> {
 	return request({
 		url: `${BASE_URL}/users/${username}/repos`,
 		method: 'get',

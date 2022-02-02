@@ -2,7 +2,7 @@
     <div v-if="info !== null">
         <div class="flex items-center justify-center h-screen md:h-[32rem]">
             <div
-                class="bg-white font-semibold text-center rounded-3xl border shadow-xl p-10 max-w-xs"
+                class="bg-white font-semibold text-center rounded-3xl border shadow-xl p-8 max-w-xs"
             >
                 <img
                     class="mb-3 w-32 h-32 rounded-full shadow-lg mx-auto"
@@ -17,6 +17,12 @@
                     :href="info?.html_url"
                     target="_blank"
                 >Github Profile</a>
+
+                <div class="my-2">
+                    <div class="inline">
+                        <country-flag :country="getCountryCode()" size="normal"></country-flag>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -36,6 +42,7 @@
 
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
+import { byCountry } from 'country-code-lookup';
 
 export default defineComponent({
     props: {
@@ -44,6 +51,21 @@ export default defineComponent({
             require: true
         }
     },
-    methods: {},
+    data() {
+        return {
+            countryCode: ''
+        }
+    },
+    methods: {
+        getCountryCode(): string {
+            const res = byCountry('Brazil')?.iso3;
+            console.log(`Country name: ${this.info.location} - code: ${res}`)
+            if (res) {
+                return res;
+            } else {
+                return '';
+            }
+        }
+    }
 });
 </script>

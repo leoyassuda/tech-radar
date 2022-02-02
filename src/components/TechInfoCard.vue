@@ -1,26 +1,25 @@
 <template>
-    <!-- component -->
     <div class="w-screen h-auto flex justify-center items-center">
         <div class="container mx-auto max-w-xs rounded-lg overflow-hidden shadow-lg my-2 bg-white">
             <div class="relative m-2 bg-blend-darken">
                 <img
                     class="w-1/2 bg-blend-darken inline"
-                    src="../static/images/github.png"
+                    src="../static/images/{{repoInfo?.language}}"
                     alt="Profile picture"
                 />
             </div>
             <div class="py-6 px-3 text-center tracking-wide grid grid-cols-3 gap-6">
-                <div class="posts">
-                    <p class="text-lg">324</p>
-                    <p class="text-gray-400 text-sm">Posts</p>
+                <div class="repos-quantity">
+                    <p class="text-lg">{{ techInfo?.quantity }}</p>
+                    <p class="text-gray-400 text-sm">Repos</p>
                 </div>
-                <div class="followers">
-                    <p class="text-lg">7542</p>
-                    <p class="text-gray-400 text-sm">Followers</p>
+                <div class="repo-size">
+                    <p class="text-lg">{{ techInfo?.size }}</p>
+                    <p class="text-gray-400 text-sm">Size</p>
                 </div>
-                <div class="following">
-                    <p class="text-lg">295</p>
-                    <p class="text-gray-400 text-sm">Following</p>
+                <div class="repo-watchers">
+                    <p class="text-lg">{{ techInfo?.watchers }}</p>
+                    <p class="text-gray-400 text-sm">Watchers</p>
                 </div>
             </div>
             <div class="text-center w-full py-4">
@@ -47,7 +46,7 @@
                     >
                         <DisclosurePanel class="text-gray-500">
                             <a
-                                v-for="item in solutions"
+                                v-for="item in techInfo.repos"
                                 :key="item.name"
                                 :href="item.href"
                                 class="flex items-center p-2 -m-3 transition duration-150 ease-in-out rounded-lg hover:bg-gray-50 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
@@ -76,37 +75,29 @@ import {
     DisclosurePanel,
 } from '@headlessui/vue'
 import { ChevronDownIcon } from '@heroicons/vue/solid'
-
-const solutions = [
-    {
-        name: 'aaa1',
-        href: '#',
-        description: ''
-    },
-    {
-        name: 'aaa2',
-        href: '#',
-        description: ''
-    }
-]
+import { Repo } from "@/model/Repo";
+import { reduceCountLanguage } from "@/util/functions";
 
 export default defineComponent({
     props: {
-        repoInfo: {
+        techInfo: {
             type: Object as PropType<any>,
             require: true
         }
     },
-    methods: {},
+    methods: {
+        mapStructure(repoInfo: Repo[]) {
+            let asd = repoInfo.map(({ name, html_url, description, size, language, stargazers_count }) => {
+                return { name, html_url, description, size, language, stargazers_count }
+            });
+        }
+    },
     components: {
         Disclosure,
         DisclosureButton,
         DisclosurePanel,
         ChevronDownIcon
-    },
-    data() {
-        return { solutions: solutions }
-    },
+    }
 });
 </script>
 

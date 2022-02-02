@@ -1,40 +1,38 @@
-import { Repos } from '@/model/Repos';
+import { Repo } from '@/model/Repo';
 import { defineStore } from 'pinia';
-import { getUserInfo } from '../../api/user';
-import { User } from '../../model/User';
-
+import { getUserRepos } from '@/api/user';
 interface UserReposState {
-	info: Repos | null;
+	reposInfo: Repo[] | null;
 }
 
 export const userReposStore = defineStore('userReposStore', {
 	state: (): UserReposState => ({
-		info: null,
+		reposInfo: [] as Repo[],
 	}),
 	getters: {
 		getInfo: (state) => {
-			return state.info;
+			return state.reposInfo;
 		},
 	},
 	actions: {
-		setInfo(info: User | null) {
-			this.info = info;
+		setReposInfo(repos: Repo[] | null) {
+			this.reposInfo = repos;
 		},
-		fetchInfo(username: string) {
+		fetchReposInfo(username: string) {
 			if (username) {
-				const request = getUserInfo(username);
+				const request = getUserRepos(username);
 				request
 					.then((res) => {
 						console.log(res);
 						if (res.status == 200) {
-							this.setInfo(res.data);
+							this.setReposInfo(res.data);
 						}
 					})
 					.catch((err) => {
-						console.error('Error to request user info!', err);
+						console.error('Error to request repos!', err);
 					});
-			}else{
-				this.info = null;
+			} else {
+				this.reposInfo = null;
 			}
 		},
 	},

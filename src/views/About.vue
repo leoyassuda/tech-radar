@@ -1,21 +1,33 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import { onMounted  } from 'vue'
+import { ref } from "@vue/runtime-core";
 import { storeToRefs, mapActions } from 'pinia';
-import { userStore } from '../store/modules/user';
+import { userStore } from '@/store/modules/user';
+import { userReposStore } from '@/store/modules/userRepo';
 import UserCard from '@/components/UserCard.vue';
 import ReposChartDunutCard from '@/components/ReposChartDunutCard.vue'
-import RepoInfoCard from '@/components/RepoInfoCard.vue'
+import RepoInfoCard from '@/components/TechInfoCard.vue'
 import Statistic from '@/components/Statistic.vue'
 
 let username = '';
 
 const main = userStore();
+const mainRepos = userReposStore();
 
-const { info } = storeToRefs(main);
+const { userInfo } = storeToRefs(main);
+const { reposInfo } = storeToRefs(mainRepos);
 
-const { fetchInfo, setInfo } = mapActions(userStore, ["fetchInfo", "setInfo"])
+const { fetchInfo, setInfo } = mapActions(userStore, ["fetchInfo", "setInfo"]);
+const { fetchReposInfo, setReposInfo } = mapActions(userReposStore, ["fetchReposInfo", "setReposInfo"]);
 
-onMounted(() => main.fetchInfo(username))
+onMounted(() =>{
+   main.fetchInfo(username);
+   mainRepos.fetchReposInfo(username);
+})
+
+function edit(): void {
+  
+}
 
 </script>
 
@@ -34,13 +46,13 @@ onMounted(() => main.fetchInfo(username))
       >Load</button>
     </div>
     <div class="basis">
-      <UserCard msg="asd123" :info="info" />
+      <UserCard :info="userInfo" />
     </div>
     <div class="inline basis content-center">
-      <ReposChartDunutCard  />
+      <ReposChartDunutCard :repos="[]" />
     </div>
     <div class="inline basis content-center">
-      <RepoInfoCard :repos="[]" />
+      <RepoInfoCard :tech-info="reposInfo" />
     </div>
     <div class="inline basis content-center">
       <Statistic />

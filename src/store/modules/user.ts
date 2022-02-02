@@ -1,23 +1,23 @@
 import { defineStore } from 'pinia';
-import { getUserInfo } from '../../api/user';
-import { User } from '../../model/User';
+import { getUserInfo } from '@/api/user';
+import { User } from '@/model/User';
 
 interface UserState {
-	info: User | null;
+	userInfo: User | null;
 }
 
 export const userStore = defineStore('userStore', {
 	state: (): UserState => ({
-		info: null,
+		userInfo: {} as User,
 	}),
 	getters: {
 		getInfo: (state) => {
-			return state.info;
+			return state.userInfo;
 		},
 	},
 	actions: {
 		setInfo(info: User | null) {
-			this.info = info;
+			this.userInfo = info;
 		},
 		fetchInfo(username: string) {
 			if (username) {
@@ -32,8 +32,8 @@ export const userStore = defineStore('userStore', {
 					.catch((err) => {
 						console.error('Error to request user info!', err);
 					});
-			}else{
-				this.info = null;
+			} else {
+				this.userInfo = null;
 			}
 		},
 	},

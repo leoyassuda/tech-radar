@@ -33,12 +33,12 @@ request.interceptors.response.use(
   }
 );
 
-export interface PromiseBaseName {
+export interface PromiseBase {
   data: string | Array<any> | number | Object | undefined | null;
   error_code: number;
   message?: string;
 }
 
-export type ResponseName = AxiosResponse<PromiseBaseName>;
+export type ResponseBase = AxiosResponse<PromiseBase>;
 
 export default request;
