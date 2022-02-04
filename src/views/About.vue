@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted  } from 'vue'
+import { onMounted } from 'vue'
 import { ref } from "@vue/runtime-core";
 import { storeToRefs, mapActions } from 'pinia';
 import { userStore } from '@/store/modules/user';
@@ -20,15 +20,12 @@ const { reposInfo } = storeToRefs(mainRepos);
 const { fetchInfo, setInfo } = mapActions(userStore, ["fetchInfo", "setInfo"]);
 const { fetchReposInfo, setReposInfo } = mapActions(userReposStore, ["fetchReposInfo", "setReposInfo"]);
 
-onMounted(() =>{
-   main.fetchInfo(username);
-   mainRepos.fetchReposInfo(username);
-})
+console.log('repos:', reposInfo.value)
 
-function edit(): void {
-  
-}
-
+// onMounted(() =>{
+//    main.fetchInfo(username);
+//    mainRepos.fetchReposInfo(username);
+// })
 </script>
 
 <template>
@@ -41,7 +38,7 @@ function edit(): void {
         v-model="username"
       />
       <button
-        @click="fetchInfo(username)"
+        @click="setReposInfo(null); fetchInfo(username); fetchReposInfo(username)"
         class="px-8 rounded-r-lg bg-yellow-400 text-gray-800 font-bold p-4 uppercase border-yellow-500 border-t border-b border-r"
       >Load</button>
     </div>
@@ -49,13 +46,13 @@ function edit(): void {
       <UserCard :info="userInfo" />
     </div>
     <div class="inline basis content-center">
-      <ReposChartDunutCard :repos="[]" />
+      <ReposChartDunutCard v-if="reposInfo !== null" :repos="reposInfo" />
     </div>
     <div class="inline basis content-center">
-      <RepoInfoCard :tech-info="reposInfo" />
+      <RepoInfoCard v-if="reposInfo !== null" :tech-info="reposInfo" />
     </div>
     <div class="inline basis content-center">
-      <Statistic />
+      <Statistic v-if="reposInfo !== null" />
     </div>
   </div>
 </template>

@@ -18,7 +18,7 @@
                     target="_blank"
                 >Github Profile</a>
 
-                <div class="my-2">
+                <div class="my-4">
                     <div class="inline">
                         <country-flag :country="getCountryCode()" size="normal"></country-flag>
                     </div>
@@ -58,7 +58,7 @@ export default defineComponent({
     },
     methods: {
         getCountryCode(): string {
-            const res = byCountry('Brazil')?.iso3;
+            const res = byCountry(this.info.location)?.iso3;
             console.log(`Country name: ${this.info.location} - code: ${res}`)
             if (res) {
                 return res;

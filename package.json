@@ -12,6 +12,7 @@
     "@heroicons/vue": "^1.0.5",
     "@types/qs": "^6.9.7",
     "axios": "^0.25.0",
+    "chroma.ts": "^1.0.10",
     "country-code-lookup": "^0.0.20",
     "pinia": "^2.0.9",
     "qs": "^6.10.3",

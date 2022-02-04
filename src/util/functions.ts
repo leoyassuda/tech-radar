@@ -18,8 +18,9 @@ export function reduceCountLanguage(dataArray: Repo[]): Object {
  * @param data array of Objects
  * @returns array of strings with entry keys
  */
- export function getKeys(data: Object): Array<string> {
-	return Object.keys(data);
+export function getKeys(data: Object): Array<string> {
+	if (data) return Object.keys(data);
+	return [];
 }
 
 /**
@@ -27,7 +28,7 @@ export function reduceCountLanguage(dataArray: Repo[]): Object {
  * @param data array of Objects
  * @returns array of values
  */
- export function getValues(data: Object): Array<string> {
-	return Object.values(data);
+export function getValues(data: Object): Array<string> {
+	if (data) return Object.values(data);
+	return [];
 }
-

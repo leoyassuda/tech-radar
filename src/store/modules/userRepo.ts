@@ -23,7 +23,7 @@ export const userReposStore = defineStore('userReposStore', {
 				const request = getUserRepos(username);
 				request
 					.then((res) => {
-						console.log(res);
+						console.log('fetch repo:', res);
 						if (res.status == 200) {
 							this.setReposInfo(res.data);
 						}

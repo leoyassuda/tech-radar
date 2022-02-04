@@ -1,6 +1,12 @@
 <template>
-    <div id="chart-repo-dunut" class="inline px-8 content-center">
-        <DoughnutChart v-bind="doughnutChartProps" :styles="myStyles()" />
+    <div v-if="testData !== null" id="chart-repo-dunut" class="inline px-8 content-center">
+        <DoughnutChart ref="doughnutRef" v-bind="doughnutChartProps" :styles="myStyles()" />
+        <!-- <DoughnutChart
+            ref="doughnutRef"
+            :chartData="testData"
+            :options="options"
+        :styles="myStyles()"
+        />-->
     </div>
 </template>
 
@@ -8,6 +14,9 @@
 import { defineComponent, computed, ref, PropType } from "vue";
 import { DoughnutChart, useDoughnutChart } from "vue-chart-3";
 import { Chart, ChartData, ChartOptions, registerables } from "chart.js";
+import { reduceCountLanguage, getKeys, getValues } from '@/util/functions';
+import { Repo } from "@/model/Repo";
+import { color } from 'chroma.ts';
 
 Chart.register(...registerables);
 
@@ -16,27 +25,35 @@ export default defineComponent({
 
     props: {
         repos: {
-            type: Object as () => PropType<any>,
-            required: true
+            type: Object as () => Repo[],
+            required: false
         }
     },
 
     setup({ repos }) {
-        const dataValues = ref([30, 40, 60, 70, 5]);
+        const reduceLanguages = reduceCountLanguage(repos);
+        const values = ref(getValues(reduceLanguages));
+        const keys = ref(getKeys(reduceLanguages));
         const toggleLegend = ref(true);
 
+        console.log('values:', values.value);
+        console.log('keys:', keys.value);
+
+        let colorData = color('teal');
+        let arrayColors: string[] = [];
+
+        for (let i = 1; i <= keys.value.length; i++) {
+            arrayColors.push(colorData.saturate(i * 2.5).hex());
+        }
+
+        console.log('colors-arr', arrayColors);
+
         const testData = computed<ChartData<"doughnut">>(() => ({
-            labels: ["Java", "Node", "Python", "Go", "Elixir"],
+            labels: keys.value,
             datasets: [
                 {
-                    data: dataValues.value,
-                    backgroundColor: [
-                        "#77CEFF",
-                        "#0079AF",
-                        "#123E6B",
-                        "#97B0C4",
-                        "#A5C8ED",
-                    ],
+                    data: values.value,
+                    backgroundColor: arrayColors,
                 },
             ],
         }));
@@ -54,7 +71,7 @@ export default defineComponent({
                 },
                 title: {
                     display: true,
-                    text: "Repo Stats",
+                    text: "Repos Chart by Languages",
                 },
             }
         }));
@@ -64,6 +81,32 @@ export default defineComponent({
             options,
         });
 
+
+        const doughnutRef = ref();
+
+        // const options = ref({
+        //     responsive: true,
+        //     plugins: {
+        //         legend: {
+        //             position: 'top',
+        //         },
+        //         title: {
+        //             display: true,
+        //             text: 'Repos Chart by Languages',
+        //         },
+        //     },
+        // });
+
+        // const testData = computed(() => ({
+        //     labels: keys.value,
+        //     datasets: [
+        //         {
+        //             data: values.value,
+        //             backgroundColor: arrayColors,
+        //         },
+        //     ],
+        // }));
+
         function myStyles() {
             return {
                 position: 'relative',
@@ -72,18 +115,13 @@ export default defineComponent({
             }
         }
 
-        function asd(repos:any): string {
-            
-
-            return ''
-        }
-
         return {
             testData,
             options,
             doughnutChartRef,
             doughnutChartProps,
-            myStyles
+            myStyles,
+            doughnutRef
         };
     },
 });

@@ -24,7 +24,7 @@ export const userStore = defineStore('userStore', {
 				const request = getUserInfo(username);
 				request
 					.then((res) => {
-						console.log(res);
+						console.log('fetch user:', res);
 						if (res.status == 200) {
 							this.setInfo(res.data);
 						}
