@@ -15,7 +15,7 @@ export const userReposStore = defineStore('userReposStore', {
 		},
 	},
 	actions: {
-		setReposInfo(repos: Repo[] | null) {
+		setReposInfo(repos: Repo[]) {
 			this.reposInfo = repos;
 		},
 		fetchReposInfo(username: string) {
@@ -29,10 +29,11 @@ export const userReposStore = defineStore('userReposStore', {
 						}
 					})
 					.catch((err) => {
+						this.setReposInfo([]);
 						console.error('Error to request repos!', err);
 					});
 			} else {
-				this.reposInfo = null;
+				this.reposInfo = [];
 			}
 		},
 	},

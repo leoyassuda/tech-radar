@@ -1,5 +1,5 @@
 <template>
-    <div v-if="testData !== null" id="chart-repo-dunut" class="inline px-8 content-center">
+    <div v-if="checkRepos(repos)" id="chart-repo-dunut" class="inline px-8 content-center">
         <DoughnutChart ref="doughnutRef" v-bind="doughnutChartProps" :styles="myStyles()" />
         <!-- <DoughnutChart
             ref="doughnutRef"
@@ -25,8 +25,15 @@ export default defineComponent({
 
     props: {
         repos: {
-            type: Object as () => Repo[],
-            required: false
+            type: Object as PropType<Repo[]>,
+            required: true
+        }
+    },
+
+    methods: {
+        checkRepos(repos: Repo[]): boolean {
+            if (repos) return repos.length > 0
+            return false;
         }
     },
 
@@ -38,6 +45,10 @@ export default defineComponent({
 
         console.log('values:', values.value);
         console.log('keys:', keys.value);
+
+        const itemIndex = keys.value.findIndex((item) => item === 'null');
+        keys.value[itemIndex] = 'Empty Repo'
+
 
         let colorData = color('teal');
         let arrayColors: string[] = [];
@@ -84,34 +95,12 @@ export default defineComponent({
 
         const doughnutRef = ref();
 
-        // const options = ref({
-        //     responsive: true,
-        //     plugins: {
-        //         legend: {
-        //             position: 'top',
-        //         },
-        //         title: {
-        //             display: true,
-        //             text: 'Repos Chart by Languages',
-        //         },
-        //     },
-        // });
-
-        // const testData = computed(() => ({
-        //     labels: keys.value,
-        //     datasets: [
-        //         {
-        //             data: values.value,
-        //             backgroundColor: arrayColors,
-        //         },
-        //     ],
-        // }));
 
         function myStyles() {
             return {
                 position: 'relative',
-                'padding-left': '20%',
-                'padding-right': '20%',
+                'padding-left': '10%',
+                'padding-right': '10%',
             }
         }
 

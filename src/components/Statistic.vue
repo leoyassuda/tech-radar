@@ -1,6 +1,6 @@
 <template>
     <!-- component -->
-    <div class="w-full h-screen bg-gray-800 flex justify-center items-center">
+    <div class="w-full h-56 bg-gray-800 flex justify-center items-center">
         <div class="container flex flex-col gap-4 mx-8">
             <label class="text-gray-100 font-semibold tracking-wider text-lg">Total</label>
             <div
@@ -33,3 +33,22 @@
         </div>
     </div>
 </template>
+
+<script lang="ts">
+import { defineComponent, PropType } from "vue";
+
+export default defineComponent({
+    props: {
+        info: {
+            type: Object as PropType<any>,
+            require: true
+        }
+    },
+    data() {
+        return {
+            countryCode: ''
+        }
+    },
+    methods: {}
+});
+</script>

@@ -1,5 +1,5 @@
 <template>
-    <div v-if="info !== null">
+    <div v-if="info !== null && Object.entries(info).length > 0">
         <div class="flex items-center justify-center h-screen md:h-[32rem]">
             <div
                 class="bg-white font-semibold text-center rounded-3xl border shadow-xl p-8 max-w-xs"
