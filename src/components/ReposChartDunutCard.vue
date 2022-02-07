@@ -98,9 +98,10 @@ export default defineComponent({
 
         function myStyles() {
             return {
-                position: 'relative',
+                'position': 'relative',
                 'padding-left': '10%',
                 'padding-right': '10%',
+                'min-height': '400px'
             }
         }
 
@@ -116,9 +117,13 @@ export default defineComponent({
 });
 </script>
 
-<style>
+<style scoped>
 #chart-repo-dunut > div > button {
     padding-left: 5px;
     padding-right: 5px;
+}
+#chart-repo-dunut > div > canvas {
+    height: max-content;
+    min-height: max-content;
 }
 </style>

@@ -58,8 +58,8 @@ function checkRepos(repos: Repo[] | null): boolean {
     <div v-if="checkRepos(reposInfo)" class="inline content-center">
       <ReposChartDunutCard :repos="reposInfo" />
     </div>
-    <div v-if="checkRepos(reposInfo)">
-      <RepoInfoCard :repos="reposInfo" />
+    <div v-if="checkRepos(reposInfo)" class="flex flex-wrap content-center items-center mx-8">
+      <RepoInfoCard :repos="reposInfo"/>
     </div>
     <div class="inline basis content-center">
       <Statistic />
