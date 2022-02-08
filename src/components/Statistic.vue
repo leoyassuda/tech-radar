@@ -24,7 +24,7 @@
                 </div>
                 <div class="relative flex-1 flex flex-col gap-2 px-4">
                     <label class="text-gray-800 text-base font-semibold tracking-wider">Total Size</label>
-                    <label class="text-green-800 text-4xl font-bold">318 Mb</label>
+                    <label class="text-green-800 text-4xl font-bold">{{totalSize}} Mb</label>
                     <div
                         class="bg-green-400 rounded-md font-semibold text-xs text-gray-100 p-2 md:right-4 md:bottom-0 md:absolute"
                     >+ 5%</div>
@@ -35,20 +35,24 @@
 </template>
 
 <script lang="ts">
+import { Repo } from "@/model/Repo";
 import { defineComponent, PropType } from "vue";
 
 export default defineComponent({
     props: {
-        info: {
-            type: Object as PropType<any>,
+        repos: {
+            type: Object as PropType<Repo[]>,
             require: true
         }
     },
     data() {
         return {
-            countryCode: ''
+            totalSize: 337
         }
     },
-    methods: {}
+    methods: {},
+    setup({repos}){
+        
+    }
 });
 </script>

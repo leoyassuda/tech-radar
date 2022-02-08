@@ -47,8 +47,7 @@ export default defineComponent({
         console.log('keys:', keys.value);
 
         const itemIndex = keys.value.findIndex((item) => item === 'null');
-        keys.value[itemIndex] = 'Empty Repo'
-
+        keys.value[itemIndex] = 'Generic Repo'
 
         let colorData = color('teal');
         let arrayColors: string[] = [];

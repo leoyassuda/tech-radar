@@ -1,11 +1,30 @@
 <template>
-    <div v-for="repo of aaa" class="flex flex-wrap items-center py-2 px-2">
+    <div v-for="repo of repoStructList" class="text-center items-center py-2 px-2">
         <div class="h-auto flex justify-center items-center">
             <div
                 class="container mx-auto max-w-xs rounded-lg overflow-hidden shadow-lg my-2 bg-white"
             >
                 <div class="relative m-2 bg-blend-darken">
-                    <img class="w-1/4 bg-blend-darken inline" :src="repo.img" alt="Language Icon" />
+                    <!-- <img class="w-1/4 bg-blend-darken inline" :src="repo.img" alt="Language Icon" /> -->
+                    <VueLoadImage>
+                        <template v-slot:image>
+                            <img
+                                class="w-1/4 bg-blend-darken inline"
+                                :src="repo.img"
+                                alt="Language Icon"
+                            />
+                        </template>
+                        <!-- <template v-slot:preloader>
+                            <img src="./image-loader.gif" />
+                        </template>-->
+                        <template v-slot:error>
+                            <img
+                                class="w-1/4 bg-blend-darken inline"
+                                src="/images/github.png"
+                                alt="Language Icon"
+                            />
+                        </template>
+                    </VueLoadImage>
                 </div>
                 <pre>{{ repo.language }}</pre>
                 <div class="py-6 px-3 text-center tracking-wide grid grid-cols-3 gap-6">
@@ -50,21 +69,19 @@
                         >
                             <DisclosurePanel class="text-gray-500">
                                 <a
-                                v-for="item in repo.repos"
-                                :key="item.name"
-                                :href="item.href"
-                                target="_blank"
-                                class="flex items-center p-0 -m-3 transition duration-150 ease-in-out rounded-lg hover:bg-gray-50 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
-                            >
-                                <div
-                                    class="flex items-center justify-center flex-shrink-0 w-14 h-10 text-white sm:h-16 sm:w-12"
+                                    v-for="item in repo.repos"
+                                    :key="item.name"
+                                    :href="item.href"
+                                    target="_blank"
+                                    class="flex items-center p-0 -m-3 transition duration-150 ease-in-out rounded-lg hover:bg-gray-50 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
                                 >
-                                </div>
-                                <ArrowCircleRightIcon class="h-5 w-5 text-purple-700"/>
-                                <div class="ml-4">
-
-                                    <p class="text-sm font-medium text-gray-900">{{ item.name }}</p>
-                                </div>
+                                    <div
+                                        class="flex items-center justify-center flex-shrink-0 w-14 h-10 text-white sm:h-16 sm:w-12"
+                                    ></div>
+                                    <ArrowCircleRightIcon class="h-5 w-5 text-purple-700" />
+                                    <div class="ml-4">
+                                        <p class="text-sm font-medium text-gray-900">{{ item.name }}</p>
+                                    </div>
                                 </a>
                             </DisclosurePanel>
                         </transition>
@@ -98,6 +115,7 @@ import {
     DisclosurePanel,
 } from '@headlessui/vue'
 import { ArrowCircleRightIcon } from '@heroicons/vue/solid'
+import VueLoadImage from 'vue-load-image'
 import { Repo } from "@/model/Repo";
 import { reduceCountLanguage, getKeys, getValues, groupBy } from "@/util/functions";
 
@@ -128,50 +146,45 @@ export default defineComponent({
             console.log('get img: ' + language)
             return new URL(`./images/${language}.png`, import.meta.url).href;
         },
+        getImgDefault(repo: StructureRepos): void {
+            console.log('get img default: ' + repo.img)
+            repo.img = '/images/github.png';
+        }
     },
     setup({ repos }) {
-        function mapStructure(repos: Repo[]) {
-            let reduced = repos.map(({ name, html_url, size, language, stargazers_count }) => {
-                return { name, html_url, size, language, stargazers_count }
-            });
-            return reduced;
-        }
-
         const repoGroupedByLang = groupBy(repos, repo => repo.language);
 
         console.log('map repos', repoGroupedByLang);
 
-        let aaa: StructureRepos[] = [];
+        let listRepos: StructureRepos[] = [];
 
         repoGroupedByLang.forEach((lang, key) => {
             const languageString = key !== null ? key.toString().toLowerCase() : 'github'
-            let arrAAA: StructureRepoDetail[] = []
+            let arrReposDetails: StructureRepoDetail[] = []
             let sumQuanaity = lang.length;
             let sumSize = 0;
             let sumStargazers = 0;
             lang.forEach((item) => {
                 console.log(item.name);
-                arrAAA.push({
+                arrReposDetails.push({
                     name: item.name,
                     href: item.html_url
                 });
-                sumSize+=item.size;
-                sumStargazers+=item.stargazers_count;
+                sumSize += item.size;
+                sumStargazers += item.stargazers_count;
             })
-            aaa.push({
+            listRepos.push({
                 language: languageString,
                 img: `/images/${languageString}.png`,
                 size: sumSize,
                 quantity: sumQuanaity,
-                repos: arrAAA,
+                repos: arrReposDetails,
                 stargazers_count: sumStargazers
             })
         })
 
-        console.log('aaaaa', aaa);
-
         return {
-            aaa
+            repoStructList: listRepos
         }
     },
     components: {
@@ -179,6 +192,7 @@ export default defineComponent({
         DisclosureButton,
         DisclosurePanel,
         ArrowCircleRightIcon,
+        VueLoadImage,
     }
 });
 </script>

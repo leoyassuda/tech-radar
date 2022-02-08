@@ -19,6 +19,7 @@
     "vue": "^3.2.25",
     "vue-chart-3": "^3.0.9",
     "vue-country-flag-next": "^2.3.2",
+    "vue-load-image": "^1.1.0",
     "vue-router": "^4.0.12",
     "vuex": "^4.0.2"
   },
